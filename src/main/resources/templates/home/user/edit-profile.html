@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: formField(title = ${customer.getFullName()})"></head>
+<style>
+    .input-edit-profile{
+        background: transparent;
+        border: 1px solid #cccc;
+        border-radius: 3px;
+        box-sizing: border-box;
+        flex: 0 1 355px;
+        font-size: 14px;
+        height: 40px;
+        padding: 0 10px;
+        width: 100%;
+    }
+    .input-edit-profile:disabled{
+        background-color: rgb(239, 239, 239);
+        border-color: rgb(219, 219, 219);
+        color: rgb(142, 142, 142);
+        cursor: not-allowed;
+    }
+    .t-r{
+        top: 10px;
+        right: 25px;
+    }
+
+</style>
+
+<body class="animsition">
+
+<header th:if="${customer} != null">
+    <div th:replace="fragments/nav :: formField(imgview = 'null',fullname = ${customer.getFullName()})"></div>
+</header>
+<header th:if="${customer} == null">
+    <div th:replace="fragments/nav"></div>
+</header>
+<th:block th:if="${edit_profile_success != null}">
+    <script>
+        window.onload = function (){
+            swal("Success !","Edit Profile Success", "success");
+        }
+    </script>
+</th:block>
+<th:block th:if="${edit_profile_fail != null}">
+    <script>
+        window.onload = function (){
+            swal("Fail !","Edit Profile Fail", "error");
+        }
+    </script>
+</th:block>
+<section style="background-color: #eee;" class="p-b-140 bg0 p-t-80 p-b-50">
+    <div class="container py-5">
+        <div class="row">
+            <div class="col">
+                <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+                    <ol class="breadcrumb mb-0">
+                        <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+                        <li class="breadcrumb-item"><a th:href="@{/user}">User</a></li>
+                        <li class="breadcrumb-item"><a th:href="@{/user/edit}">edit</a></li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="card mb-4">
+                    <div class="card-body text-center">
+                        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar"
+                             class="rounded-circle img-fluid" style="width: 150px;">
+                        <h5 class="my-3" th:text="${customer.getFullName()}"></h5>
+                        <div class="d-flex justify-content-center mb-2">
+                            <a th:href="@{/user}"><button type="button" class="btn btn-outline-primary ms-1">Profile</button></a>
+                            <a><button type="button" class="btn btn-outline-primary ms-1" onclick="showChangePassword()">Changes Password</button></a>
+                        </div>
+                    </div>
+                    <div class="card-body text-center " id="changes_password" style="display: none">
+                        <form th:action="@{/user/reset/password}" method="post" >
+                            <div class="row">
+                                <div class="col-sm-3 m-aufto">
+                                    <p class="mb-0">Current Password</p>
+                                </div>
+                                <div class="col-sm-9 position-relative">
+                                    <input type="password" name="current_password"  class="input-edit-profile" id="current_password"  >
+                                    <button type="button" id="current_btnToggle" class="toggle t-r"><i id="current_eyeIcon" class="bi bi-eye"></i></button>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3 m-auto">
+                                    <p class="mb-0">New Password</p>
+                                </div>
+                                <div class="col-sm-9 position-relative">
+                                    <input type="password" name="new_password"  class="input-edit-profile" id="new_password"  >
+                                    <button type="button" id="new_btnToggle" class="toggle t-r"><i id="new_eyeIcon" class="bi bi-eye"></i></button>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3 m-auto">
+                                    <p class="mb-0">Confirm Password</p>
+                                </div>
+                                <div class="col-sm-9 position-relative">
+                                    <input type="password" name="confirm_password"  class="input-edit-profile" id="confirm_password_edit"  >
+                                    <button type="button" id="confirm_btnToggle" class="toggle t-r"><i id="confirm_eyeIcon" class="bi bi-eye"></i></button>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="d-flex justify-content-center mb-2">
+                                    <button type="submit" class="btn btn-outline-primary ms-1">Changes Password</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8">
+
+                <div class="row">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <form  th:action="@{/user/edit}" th:object="${customer}" method="post">
+                                <div class="row">
+                                    <div class="col-sm-3 m-auto">
+                                        <p class="mb-0">First Name</p>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="input-edit-profile"  th:field="*{firstName}" >
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3 m-auto">
+                                        <p class="mb-0">Last Name</p>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="input-edit-profile"  th:field="*{lastName}" >
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3 m-auto">
+                                        <p class="mb-0">Date</p>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <input type="date" class="input-edit-profile"  th:field="*{birthday}">
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3 m-auto">
+                                        <p class="mb-0">Email</p>
+                                    </div>
+                                    <div class="col-sm-9 ">
+                                        <input type="text" class="input-edit-profile"  th:field="*{email}" disabled>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3 m-auto">
+                                        <p class="mb-0">Phone</p>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="input-edit-profile"   th:field="*{phoneNumber}">
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3 m-auto">
+                                        <p class="mb-0">Address</p>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <input type="text"  class="input-edit-profile"  th:field="*{address}">
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3 m-auto">
+                                        <p class="mb-0">Confirm Password</p>
+                                    </div>
+                                    <div class="col-sm-9 position-relative">
+                                        <input type="password" name="password"  class="input-edit-profile" id="confirm_password"  >
+                                        <button type="button" id="btnToggle" class="toggle t-r"><i id="eyeIcon" class="bi bi-eye"></i></button>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="d-flex justify-content-center mb-2">
+                                        <button type="submit" class="btn btn-outline-primary ms-1">Save</button>
+                                    </div>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- Footer -->
+<footer th:replace="fragments/footer"></footer>
+
+
+<!-- Back to top -->
+<div class="btn-back-to-top" id="myBtn">
+		<span class="symbol-btn-back-to-top">
+			<i class="zmdi zmdi-chevron-up"></i>
+		</span>
+</div>
+<div th:replace="fragments/addjs"></div>
+<script>
+    let passwordInput = document.getElementById('confirm_password'),
+        toggle = document.getElementById('btnToggle'),
+        icon =  document.getElementById('eyeIcon');
+
+    function togglePassword() {
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            icon.classList.add("bi-eye-slash");
+            icon.classList.remove("bi-eye");
+            //toggle.innerHTML = 'hide';
+        } else {
+            passwordInput.type = 'password';
+            icon.classList.remove("bi-eye-slash");
+            icon.classList.add("bi-eye");
+            //toggle.innerHTML = 'show';
+        }
+    }
+
+    function checkInput() {
+        //if (passwordInput.value === '') {
+        //toggle.style.display = 'none';
+        //toggle.innerHTML = 'show';
+        //  passwordInput.type = 'password';
+        //} else {
+        //  toggle.style.display = 'block';
+        //}
+    }
+
+    toggle.addEventListener('click', togglePassword, false);
+    // passwordInput.addEventListener('keyup', checkInput, false);
+    let current_passwordInput = document.getElementById('current_password'),
+        current_toggle = document.getElementById('current_btnToggle'),
+        current_icon =  document.getElementById('current_eyeIcon');
+
+    function current_togglePassword() {
+        if (current_passwordInput.type === 'password') {
+            current_passwordInput.type = 'text';
+            current_icon.classList.add("bi-eye-slash");
+            current_icon.classList.remove("bi-eye");
+            //toggle.innerHTML = 'hide';
+        } else {
+            current_passwordInput.type = 'password';
+            current_icon.classList.remove("bi-eye-slash");
+            current_icon.classList.add("bi-eye");
+            //toggle.innerHTML = 'show';
+        }
+    }
+
+
+    let new_passwordInput = document.getElementById('new_password'),
+        new_toggle = document.getElementById('new_btnToggle'),
+        new_icon =  document.getElementById('new_eyeIcon');
+
+    function new_togglePassword() {
+        if (new_passwordInput.type === 'password') {
+            new_passwordInput.type = 'text';
+            new_icon.classList.add("bi-eye-slash");
+            new_icon.classList.remove("bi-eye");
+            //toggle.innerHTML = 'hide';
+        } else {
+            new_passwordInput.type = 'password';
+            new_icon.classList.remove("bi-eye-slash");
+            new_icon.classList.add("bi-eye");
+            //toggle.innerHTML = 'show';
+        }
+    }
+    let confirm_passwordInput = document.getElementById('confirm_password_edit'),
+        confirm_toggle = document.getElementById('confirm_btnToggle'),
+        confirm_icon =  document.getElementById('confirm_eyeIcon');
+
+    function confirm_togglePassword() {
+        if (confirm_passwordInput.type === 'password') {
+            confirm_passwordInput.type = 'text';
+            confirm_icon.classList.add("bi-eye-slash");
+            confirm_icon.classList.remove("bi-eye");
+            //toggle.innerHTML = 'hide';
+        } else {
+            confirm_passwordInput.type = 'password';
+            confirm_icon.classList.remove("bi-eye-slash");
+            confirm_icon.classList.add("bi-eye");
+            //toggle.innerHTML = 'show';
+        }
+    }
+
+    new_toggle.addEventListener('click', new_togglePassword, false);
+
+    current_toggle.addEventListener('click', current_togglePassword, false);
+
+    confirm_toggle.addEventListener('click', confirm_togglePassword, false);
+
+
+    function showChangePassword(){
+        var show_changes_pass = document.getElementById("changes_password").style.display;
+        if(show_changes_pass == "none"){
+            document.getElementById("changes_password").style.display = "block";
+        }else {
+            document.getElementById("changes_password").style.display = "none";
+        }
+    }
+</script>
+
+</body>
+</html>

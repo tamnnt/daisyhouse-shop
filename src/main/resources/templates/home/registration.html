@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: formField(title = 'Registration')">
+</head>
+<style>
+    .row{
+        padding: 0 0 20px 0;
+    }
+</style>
+<body class="animsition">
+<div th:replace="fragments/nav"></div>
+<div class="register-page bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 offset-lg-1">
+                <div class="bg-white shadow rounded">
+                    <div class="row">
+                        <div class="col-md-7 pe-0">
+                            <div class="form-left h-100 py-5 px-5">
+                                <form  th:action="@{/registration}" th:object="${customer}" class="row g-4"  method="post">
+                                    <div class="row">
+                                        <div class="col-12 col-sm-6">
+                                            <label>First Name<span class="text-danger">*</span></label>
+                                            <div class="input-group">
+                                                <div class="input-group-text"><i class="bi bi-person-fill"></i></div>
+                                                <input type="text" class="form-control" th:value="${customer} == null ? null : ${customer.getFirstName()}" required th:field="*{firstName}" placeholder="Enter First Name">
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-sm-6">
+                                            <label>Last Name<span class="text-danger">*</span></label>
+                                            <div class="input-group">
+                                                <div class="input-group-text"><i class="bi bi-person-fill"></i></div>
+                                                <input type="text" class="form-control"  required th:field="*{lastName}" placeholder="Enter Last Name">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 col-sm-6">
+                                            <label>Email<span class="text-danger">*</span></label>
+                                            <div class="input-group">
+                                                    <div class="input-group-text"><i class="bi bi-envelope-fill"></i></div>
+                                                    <input type="email" class="form-control" required name="email" th:field="*{email}" placeholder="Enter Email">
+                                            </div>
+                                                <label th:if="${email_exists}"><span class="text-danger">Email Da Ton Tai</span></label>
+                                        </div>
+                                        <div class="col-12 col-sm-6">
+                                            <label>Phone Number<span class="text-danger">*</span></label>
+                                            <div class="input-group">
+                                                <div class="input-group-text"><i class="bi bi-telephone-fill"></i></div>
+                                                <input type="text" class="form-control" required name="phone" th:field="*{phoneNumber}" placeholder="Enter Phone Number">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 col-sm-6">
+                                            <label>Address<span class="text-danger">*</span></label>
+                                            <div class="input-group">
+                                                <div class="input-group-text"><i class="bi bi-globe"></i></div>
+                                                <input type="text" class="form-control" required name="phone" th:field="*{address}" placeholder="Enter Address">
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-sm-6">
+                                            <label>Birthday<span class="text-danger">*</span></label>
+                                            <div class="input-group">
+                                                <div class="input-group-text"><i class="bi bi-calendar-date-fill"></i></div>
+                                                <input type="date" class="form-control" required name="phone" th:field="*{birthday}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 col-sm-6">
+                                            <label>Username<span class="text-danger">*</span></label>
+                                            <div class="input-group">
+                                                <div class="input-group-text"><i class="bi bi-person-fill"></i></div>
+                                                <input type="text" class="form-control" required th:object="${account}" th:field="*{username}" placeholder="Enter Username">
+                                            </div>
+                                            <label th:if="${exists}"><span class="text-danger">Username Da Ton Tai</span></label>
+                                        </div>
+                                        <div class="col-12 col-sm-6">
+                                            <label>Password<span class="text-danger">*</span></label>
+                                            <div class="input-group">
+                                                <div class="input-group-text"><i class="bi bi-lock-fill"></i></div>
+                                                <input type="password" id="password" required th:object="${account}" th:field="*{password}" class="form-control" name="password" placeholder="Enter Password">
+                                                <button type="button" id="btnToggle" class="toggle"><i id="eyeIcon" class="bi bi-eye"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+<!--                                    <div class="col-sm-6">-->
+<!--                                        <div class="form-check float-end">-->
+<!--                                            <input class="form-check-input" type="checkbox" id="showPassWord">-->
+<!--                                            <label class="form-check-label" for="showPassWord">Show PassWord</label>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+                                    <div class="row p-3">
+                                        <div class="col-6 d-grid gap-2 m-auto">
+                                            <button type="submit" value="Submit" class="btn btn-primary">SignUp</button>
+                                        </div>
+                                    </div>
+                                </form>
+                                <div class="row">
+                                    <div class="col-6 ">
+                                        <a th:href="@{/login}" class="float-end text-primary">SignIn?</a>
+                                    </div>
+                                    <div class="col-6">
+                                        <a th:href="@{/recovery}" class="float-start text-primary">Forgot Password?</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-5 ps-0 d-none d-md-block">
+                            <div class="form-right h-100 bg-primary text-white text-center pt-5">
+                                <i class="bi bi-bootstrap"></i>
+                                <h2 class="fs-1">Welcome Back!!!</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="fragments/footer"></div>
+<div th:replace="fragments/addjs"></div>
+</body>
+<script>
+    let passwordInput = document.getElementById('password'),
+        toggle = document.getElementById('btnToggle'),
+        icon =  document.getElementById('eyeIcon');
+
+    function togglePassword() {
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            icon.classList.add("bi-eye-slash");
+            icon.classList.remove("bi-eye");
+            //toggle.innerHTML = 'hide';
+        } else {
+            passwordInput.type = 'password';
+            icon.classList.remove("bi-eye-slash");
+            icon.classList.add("bi-eye");
+            //toggle.innerHTML = 'show';
+        }
+    }
+
+    function checkInput() {
+        //if (passwordInput.value === '') {
+        //toggle.style.display = 'none';
+        //toggle.innerHTML = 'show';
+        //  passwordInput.type = 'password';
+        //} else {
+        //  toggle.style.display = 'block';
+        //}
+    }
+
+    toggle.addEventListener('click', togglePassword, false);
+    // passwordInput.addEventListener('keyup', checkInput, false);
+</script>
+</html>

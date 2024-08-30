@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: formField(title = 'NOT FOUND')">
+</head>
+<body class="animsition">
+    <header th:if="${customer} != null">
+        <div th:replace="fragments/nav :: formField(imgview = 'null',fullname = ${customer.getFullName()})"></div>
+    </header>
+    <header th:if="${customer} == null">
+        <div th:replace="fragments/nav"></div>
+    </header>
+    <div class="container bg0 p-t-80 p-b-50">
+        <div class="" style="text-align: center;min-height: 400px;padding: 100px 0;">
+            <h1 style="  font-size: 30px; color: red;">KHÔNG TÌM THẤY TRANG</h1>
+            <h1 style="  font-size: 30px; color: red;">404 NOT FOUND</h1>
+            <p> Vui lòng quay lại </p>
+            <a th:href="@{/}" style="background: #9b6e6e; padding: 10px; color: white; text-transform: uppercase;display: inline-block;margin-top: 10px;">trang chủ</a>
+        </div>
+    </div>
+    <div th:replace="fragments/footer"></div>
+    <div th:replace="fragments/addjs"></div>
+</body>
+</html>

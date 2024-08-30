@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<!--
+This is a starter template page. Use this page to start your new project from
+scratch. This page gets rid of all links and provides the needed markup only.
+-->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/fragmientAdmin/head :: formField(title = 'Admin')"></head>
+<style>
+    .description-product{
+        display: inline-block;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .messages{
+        text-align: center;
+        font-size: 20px;
+        font-weight: 1000;
+        background: #25cf98;
+        align-items: center;
+        justify-content: center;
+        align-content: center;
+        display: flex;
+    }
+</style>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+    <nav th:replace="admin/fragmientAdmin/nav"></nav>
+
+    <aside th:replace="admin/fragmientAdmin/slider-bar"></aside>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row" th:if="${update_product_success}">
+                    <p class="messages" th:text="${'You have update product id is:' + update_product_id }"></p>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0">Product Details</h1>
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <form th:action="@{/admin/product}" class="form-search" method="post">
+                                <input name="keyword" type="text" class="search-input">
+                                <select name="search">
+                                    <option value="0">Search by Id</option>
+                                    <option value="1">Search by Name</option>
+                                </select>
+                                <button type="submit" value="submit"><i class="fas fa-search fa-fw"></i></button>
+                            </form>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+
+        <!-- Main content -->
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row justify-content-center m-auto" style="width: 95%" >
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">STT</th>
+                            <th scope="col">ID product</th>
+                            <th scope="col">Product Name</th>
+                            <th scope="col">Category Name</th>
+                            <th scope="col">Thumbnail</th>
+                            <th scope="col">Short Description</th>
+                            <th scope="col">Full Description</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <th:block th:each="product,count : ${productList}">
+                            <tr>
+                                <td class="text-center" th:text="${count.index + 1}">Mark</td>
+                                <td th:text="${product.getProductId()}">Mark</td>
+                                <td >
+                                    <p class="description-product" th:text="${product.getProductName()}" style="max-width: 100px;"></p>
+                                </td>
+                                <td >
+                                    <p class="descriptionp-product" th:text="${product.getCategory().getCategoryName()}" style="max-width: 100px;"></p>
+                                </td>
+                                <td >
+                                    <img th:src="${product.getImages()}" width="200px">
+                                </td>
+                                <td >
+                                    <p class="description-product" th:text="${product.getShortDescription()}" style="max-width: 100px;"></p>
+                                </td>
+                                <td >
+                                    <p class="description-product" th:text="${product.getDescription()}" style="max-width: 250px;"></p>
+                                </td>
+                                <td th:text="${product.getQuantity()}">Mark</td>
+                                <td th:text="${product.getStatus() == 1 ? 'on' : 'off'}">Mark</td>
+                                <td >
+                                    <a  th:href="@{/admin/product/update/{id}(id=${product.getProductId()})}" class="text-decoration-none pr-3"><button class="btn btn-primary">Edit</button></a>
+<!--                                    <a th:href="@{/admin/product/delete/{id}(id=${product.getProductId()})}" class="text-decoration-none"><button class="btn btn-danger">Delete</button></a>-->
+                                </td>
+
+                            </tr>
+                        </th:block>
+                        </tbody>
+                    </table>
+                    <nav aria-label="..." class="d-flex justify-content-center" th:if="${currentPage != null}">
+                        <ul class="pagination">
+                            <li class="page-item" th:classappend="${currentPage} == 1 ? 'disabled' : ''">
+                                <a class="page-link" href="#" th:if="${currentPage > 1}" th:href="@{/admin/product}" >First</a>
+                                <a class="page-link" href="#" th:unless="${currentPage > 1}">First</a>
+                            </li>
+                            <li class="page-item " th:classappend="${currentPage == 1 ? 'disabled' : ''}">
+                                <a class="page-link"  tabindex="-1 " th:if="${currentPage > 1}" th:href="@{/admin/product(page=${currentPage -1})}">Previous</a>
+                            </li>
+                            <li class="page-item" th:if="${currentPage > 1}">
+                                <a class="page-link"  tabindex="-1 "  th:href="@{/admin/product(page=${currentPage -1})}" th:text="${currentPage -1}"></a>
+                            </li>
+                            <li class="page-item active">
+                                <a class="page-link" href="#" th:text="${currentPage}"><span class="sr-only">(current)</span></a>
+                            </li>
+                            <li class="page-item" th:if="${currentPage < totalPages}">
+                                <a class="page-link"  tabindex="-1 "  th:href="@{/admin/product(page=${currentPage +1})}" th:text="${currentPage  + 1}"></a>
+                            </li>
+                            <li class="page-item " th:classappend="${currentPage == totalPages ? 'disabled':''}">
+                                <a class="page-link"  th:href="@{/admin/product(page=${currentPage +1})}">Next</a>
+                            </li>
+                            <li class="page-item" th:if="${currentPage < totalPages}">
+                                <a class="page-link" th:href="@{/admin/product(page=${totalPages})}">Last</a>
+                            </li>
+                        </ul>
+                    </nav>
+
+                </div><!-- /.container-fluid -->
+            </div>
+        <!-- /.content -->
+        </div>
+    <!-- /.content-wrapper -->
+    </div>
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+        <div class="p-3">
+            <h5>Title</h5>
+            <p>Sidebar content</p>
+        </div>
+    </aside>
+    <!-- /.control-sidebar -->
+
+    <!-- Main Footer -->
+    <footer th:replace="admin/fragmientAdmin/footer"></footer>
+</div>
+<!-- ./wrapper -->
+
+<!-- REQUIRED SCRIPTS -->
+
+<!-- jQuery -->
+<div th:replace="admin/fragmientAdmin/addjs"></div>
+</body>
+</html>

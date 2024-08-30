@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: formField(title = 'Product')"></head>
+
+<body class="animsition">
+
+	<header th:if="${customer} != null">
+		<div th:replace="fragments/nav :: formField(imgview = 'null',fullname = ${customer.getFullName()})"></div>
+	</header>
+	<header th:if="${customer} == null">
+		<div th:replace="fragments/nav"></div>
+	</header>
+	<div class="bg0 m-t-23 p-b-140 bg0 p-t-80 p-b-50">
+		<div class="container">
+			<th:block th:if="${eventName != null}">
+				<h3 th:text="${eventName} +' Event'" class="font-weight-bold font-italic" style="font-weight: 1000"></h3>
+			</th:block>
+			<div class="flex-w flex-sb-m p-b-52">
+				<div class="flex-w flex-l-m filter-tope-group m-tb-10">
+					<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 how-active1" data-filter="*">
+						All Products
+					</button>
+					<th:block th:each="category : ${categoryList}">
+						<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" th:data-filter="'.'+ ${category.getCategoryName()}" th:text="${category.getCategoryName()}">
+							Women
+						</button>
+					</th:block>
+				</div>
+			</div>
+
+			<div class="row isotope-grid">
+				<th:block th:each="product : ${productList}">
+					<th:block th:if="${product.getStatus() == 1}">
+						<div th:class="'col-sm-6 col-md-4 col-lg-3 p-4 mb-5 isotope-item h-item  ' + ${product.getCategory().getCategoryName()}" style="height: 450px; ">
+							<!-- Block2 -->
+							<div class="block2" style="height: 100%;box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;border-radius: 20px;">
+								<div class="block2-pic hov-img0 d-flex p" style="height: 100%; border-radius: 20px;">
+									<img th:src="${product.getImages()}" alt="IMG-PRODUCT" style="object-fit: cover">
+								</div>
+
+								<div class="block2-txt flex-w flex-t p-t-14 mb-3">
+									<div class="block2-txt-child1 flex-col-l ">
+										<a th:href="@{/product/{id}(id=${product.getProductId()})}" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6" th:text="${product.getProductName()}">
+											Esprit Ruffle Shirt
+										</a>
+										<span class="stext-105 cl3" th:text="${#numbers.formatDecimal(product.getPircePreview(),0,'COMMA',0,'POINT')+ ' VNĐ'}">$75.00</span>
+									</div>
+
+									<div class="block2-txt-ch	ild2 flex-r p-t-3">
+										<a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
+											<img class="icon-heart1 dis-block trans-04" src="/images/icons/icon-heart-01.png" alt="ICON">
+											<img class="icon-heart2 dis-block trans-04 ab-t-l" src="/images/icons/icon-heart-02.png" alt="ICON">
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</th:block>
+
+				</th:block>
+			</div>
+
+			<!-- Load more -->
+			<div class="flex-c-m flex-w w-full p-t-45">
+				<a href="#" class="flex-c-m stext-101 cl5 size-103 bg2 bor1 hov-btn1 p-lr-15 trans-04">
+					Load More
+				</a>
+			</div>
+		</div>
+	</div>
+
+
+	<div th:replace="fragments/footer"></div>
+
+
+	<!-- Back to top -->
+	<div class="btn-back-to-top" id="myBtn">
+		<span class="symbol-btn-back-to-top">
+			<i class="zmdi zmdi-chevron-up"></i>
+		</span>
+	</div>
+<div th:replace="fragments/addjs"></div>
+
+</body>
+</html>

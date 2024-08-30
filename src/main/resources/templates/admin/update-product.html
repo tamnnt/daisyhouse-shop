@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<!--
+This is a starter template page. Use this page to start your new project from
+scratch. This page gets rid of all links and provides the needed markup only.
+-->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/fragmientAdmin/head :: formField(title = 'update product')"></head>
+<style>
+    fieldset{
+        border: 1px solid #ccc;
+        display: block;
+        padding: 10px 10px;
+        margin-top: 10px;
+    }
+    legend{
+        width: auto;
+        float: none;
+        font-size: 20px;
+        padding: 5px 5px;
+        font-weight: 900;
+    }
+    .img-preview {
+        width: 500px;
+    }
+    @media only screen and (max-width: 575px) {
+        .img-preview{
+            width: 300px;
+        }
+    }
+</style>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+    <nav th:replace="admin/fragmientAdmin/nav"></nav>
+
+    <aside th:replace="admin/fragmientAdmin/slider-bar"></aside>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h3>create Product</h3>
+                                <form th:action="@{/admin/product/update/{id}(id=${product.getProductId()})}" th:object="${product}" method="post" enctype="multipart/form-data">
+                                    <div class="row">
+                                        <div class="col-12 col-sm-6">
+                                            <label for="productname" class="form-label">Product name</label>
+                                            <input type="text" th:field="*{productName}" class="form-control" id="productname"        required>
+                                        </div>
+                                        <div class="col-12 col-sm-6">
+                                            <label for="Category" class="form-label">Category</label>
+                                            <select class="form-select" id="Category" th:field="*{category}" required>
+                                                <th:block th:each="category : ${categoryList}">
+                                                    <option th:value="${category.getCategoryId()}" th:text="${category.getCategoryName()}"></option>
+                                                </th:block>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <label for="shordescription" class="form-label">Short description</label>
+                                            <textarea type="text" class="form-control" id="shordescription" th:field="*{shortDescription}" required></textarea>
+
+                                        </div>
+                                        <div class="col-12">
+                                            <label for="Description" class="form-label">Full Description</label>
+                                            <textarea type="text" class="form-control" id="Description" th:field="*{description}" required></textarea>
+                                        </div>
+                                        <div class="col-12 col-sm-6">
+                                            <label for="Quantity" class="form-label">Quantity</label>
+                                            <input type="number" class="form-control" id="Quantity" th:field="*{quantity}" required>
+                                        </div>
+                                        <div class="col-12 col-sm-6">
+                                            <label for="Quantity" class="form-label">Price Preview</label>
+                                            <input type="number" class="form-control" id="pircePreview" th:field="*{pircePreview}" required>
+                                        </div>
+<!--                                        <div class="col-12 col-sm-6">-->
+<!--                                            <label for="Quantity" class="form-label">Weight</label>-->
+<!--                                            <input type="number" class="form-control" id="Weight" th:field="*{weight}" required>-->
+<!--                                        </div>-->
+<!--                                        <div class="col-12 col-sm-6">-->
+<!--                                            <label for="Quantity" class="form-label">Dimensions</label>-->
+<!--                                            <input type="text" class="form-control" id="Dimensions" th:field="*{dimensions}" required>-->
+<!--                                        </div>-->
+<!--                                        <div class="col-12 col-sm-6">-->
+<!--                                            <label for="Quantity" class="form-label">Materials</label>-->
+<!--                                            <input type="text" class="form-control" id="Materials" th:field="*{materials}" required>-->
+<!--                                        </div>-->
+                                        <div class="col-12 col-sm-6">
+                                            <label th:for="productstatus" class="form-label" >Product Status</label>
+                                            <select class="form-select form-control" th:id="productstatus" th:field="*{status}" required>
+                                                <option value="0">Out of stock</option>
+                                                <option value="1">stocking</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 col-sm-6">
+                                            <label for="thumbnail" class="form-label">Thumbnail</label>
+                                            <input type="file" class="form-control" id="thumbnail" name="files" accept="image/png, image/jpeg"        >
+                                            <img id="blah" th:src="${product.getProductImagesList().get(0).getUrl()}" alt="your image" class="img-preview p-2"    />
+                                        </div>
+                                        <div class="col-12 col-sm-6">
+                                            <label for="img1" class="form-label">Product img 1</label>
+                                            <input type="file" class="form-control" id="img1"        name="files"        accept="image/png, image/jpeg" >
+                                            <th:block th:if="${product.getProductImagesList().size() > 1}">
+                                                <img  id="blah1" th:src="${product.getProductImagesList().get(1).getUrl()}" alt="your image" class="img-preview p-2" />
+                                            </th:block>
+                                            <th:block th:if="${product.getProductImagesList().size() <= 1}">
+                                                <img id="blah1" src="#" alt="your image" class="img-preview p-2"  />
+                                            </th:block>
+                                        </div>
+                                        <div class="col-12 col-sm-6">
+                                            <label for="img2" class="form-label">Product img 2</label>
+                                            <input type="file" class="form-control" id="img2" name="files"        accept="image/png, image/jpeg" >
+                                            <th:block th:if="${product.getProductImagesList().size() > 2}">
+                                                <img  id="blah2" th:src="${product.getProductImagesList().get(2).getUrl()}" alt="your image" class="img-preview p-2" />
+                                            </th:block>
+                                            <th:block th:if="${product.getProductImagesList().size() <= 2}">
+                                                <img  id="blah2" src="#" alt="your image" class="img-preview p-2" />
+                                            </th:block>
+                                        </div>
+                                        <div class="col-12 col-sm-6">
+                                            <label for="img3" class="form-label">Product img 3</label>
+                                            <input type="file" class="form-control" id="img3" name="files" accept="image/png, image/jpeg" >
+                                            <th:block th:if="${product.getProductImagesList().size() > 3}">
+                                                <img  id="blah3" th:src="${product.getProductImagesList().get(3).getUrl()}" alt="your image" class="img-preview p-2" />
+                                            </th:block>
+                                            <th:block th:if="${product.getProductImagesList().size() <= 3}">
+                                                <img  id="blah3" src="#" alt="your image" class="img-preview p-2" />
+                                            </th:block>
+                                        </div>
+                                    </div>
+                                    <th:block th:each="productsize : ${product.productSizeList}" >
+                                        <fieldset class="fieldset" >
+                                            <legend class="legend" th:text="${productsize.getSize().getSizeName()}"></legend>
+                                            <div class="row">
+                                                <div class="col-12 col-sm-4">
+                                                    <label class="form-label" th:text="Quantity"></label>
+                                                    <input type="number" class="form-control"    name = "details_quantity" th:value="${productsize.getQuantity()}">
+                                                </div>
+                                                <div class="col-12 col-sm-4">
+                                                    <label class="form-label" >Status</label>
+                                                    <select class="form-select form-control"  name="details_status">
+                                                        <th:block th:if="${productsize.getStatus() == 0 }">
+                                                            <option value="0" selected>Out of stock</option>
+                                                            <option value="1"  >stocking</option>
+                                                        </th:block>
+                                                        <th:block th:if="${productsize.getStatus() == 1 }" >
+                                                            <option value="0" >Out of stock</option>
+                                                            <option value="1"  selected>stocking</option>
+                                                        </th:block>
+
+                                                    </select>
+                                                </div>
+                                                <div class="col-12 col-sm-4">
+                                                    <label    class="form-label" th:text="Price"></label>
+                                                    <input type="number" class="form-control"    name="details_price" th:value="${productsize.getPrice()}" >
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                    </th:block>
+                                    <div class="row p-3">
+                                        <div class="col-6 d-grid gap-2 m-auto">
+                                            <button type="submit" value="Submit" class="btn btn-primary">Update</button>
+                                        </div>
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+        <div class="p-3">
+            <h5>Title</h5>
+            <p>Sidebar content</p>
+        </div>
+    </aside>
+    <!-- /.control-sidebar -->
+
+    <!-- Main Footer -->
+    <footer th:replace="admin/fragmientAdmin/footer"></footer>
+</div>
+
+<div th:replace="admin/fragmientAdmin/addjs"></div>
+<script>
+    thumbnail.onchange = evt => {
+        const [file] = thumbnail.files
+        if (file) {
+            blah.src = URL.createObjectURL(file)
+        }
+    }
+    img1.onchange = evt => {
+        const [file] = img1.files
+        if (file) {
+            blah1.src = URL.createObjectURL(file)
+        }
+    }
+    img2.onchange = evt => {
+        const [file] = img2.files
+        if (file) {
+            blah2.src = URL.createObjectURL(file)
+        }
+    }
+    img3.onchange = evt => {
+        const [file] = img3.files
+        if (file) {
+            blah3.src = URL.createObjectURL(file)
+        }
+    }
+
+</script>
+
+</body>
+</html>

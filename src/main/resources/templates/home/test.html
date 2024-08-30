@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--<img src="https://cdn.manhwatv.com/m2-comic-bac-si-lang-nhien/chap-66/3.jpg">-->
+<th:block th:each="c : ${chap}">
+    <th:block th:each="stt : ${stt}">
+        <!--    <img th:src="@{${'https://cdn.manhwatv.com/m2-comic-bac-si-lang-nhien/chap-66/' + stt +'.jpg'}}">-->
+<!--        <img style="display: block;-webkit-user-select: none;margin: auto;cursor: zoom-in;background-color: hsl(0, 0%, 90%);transition: background-color 300ms;" th:src="@{${'https://cdn.manhwatv.com/m2-comic-bac-si-lang-nhien/chap-'+c+'/' + stt +'.jpg'}}" width="400px">-->
+        <img style="display: block;-webkit-user-select: none;margin: auto;cursor: zoom-in;background-color: hsl(0, 0%, 90%);transition: background-color 300ms;" th:src="@{${'https://cdn.manhwatv.com/m2-comic-quang-truong-mau/chap-'+c+'/' + stt +'.jpg'}}" width="400px">
+<!--        <img style="display: block;-webkit-user-select: none;margin: auto;cursor: zoom-in;background-color: hsl(0, 0%, 90%);transition: background-color 300ms;" th:src="@{${'https://cdn.manhwatv.com/m2-comic-manh-moi-cua-su-diet-vong/chap-'+c+'/' + stt +'.jpg'}}" width="auto">-->
+<!--        <img style="display: block;-webkit-user-select: none;margin: auto;cursor: zoom-in;background-color: hsl(0, 0%, 90%);transition: background-color 300ms;" th:src="@{${'https://cdn.manhwatv.com/van-phong-dac-biet/chap-'+c+'/' + stt +'.jpg'}}" width="auto">-->
+<!--        <img style="display: block;-webkit-user-select: none;margin: auto;cursor: zoom-in;background-color: hsl(0, 0%, 90%);transition: background-color 300ms;" th:src="@{${'https://cdn.manhwatv.com/ho-ve/chap-'+c+'/' + stt +'.jpg'}}" width="300px">-->
+<!--        <img style="display: block;-webkit-user-select: none;margin: auto;cursor: zoom-in;background-color: hsl(0, 0%, 90%);transition: background-color 300ms;" th:src="@{${'https://cdn.manhwatv.com/m2-coit mic-tro-ve-tu-coi-chet/chap-'+c+'/' + stt +'.jpg'}}" width="300px">-->
+<!--        <img style="display: block;-webkit-user-select: none;margin: auto;cursor: zoom-in;background-color: hsl(0, 0%, 90%);transition: background-color 300ms;" th:src="@{${'https://cdn.manhwatv.com/guong-mat-thien-tai/chap-1/' + stt +'.jpg'}}" width="284" height="391">-->
+    </th:block>
+</th:block>
+
+
+</body>
+</html>

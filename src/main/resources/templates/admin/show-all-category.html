@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/fragmientAdmin/head :: formField(title = 'Admin')"></head>
+<style>
+    .messages{
+        text-align: center;
+        font-size: 20px;
+        font-weight: 1000;
+        background: #25cf98;
+        align-items: center;
+        justify-content: center;
+        align-content: center;
+        display: flex;
+    }
+</style>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+    <nav th:replace="admin/fragmientAdmin/nav"></nav>
+
+    <aside th:replace="admin/fragmientAdmin/slider-bar"></aside>
+    <div class="content-wrapper">
+
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row" th:if="${message}">
+                    <p class="messages" th:text="${'Update Success category id:' + id}"></p>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0">Category Details</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row justify-content-center m-auto" style="width: 95%">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">STT</th>
+                            <th scope="col">ID Category</th>
+                            <th scope="col">Category Name</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <th:block th:each="category,count : ${categoryList}">
+                            <tr>
+                                <td th:text="${count.index + 1}">Mark</td>
+                                <td th:text="${category.getCategoryId()}">Mark</td>
+                                <td th:text="${category.getCategoryName()}">Mark</td>
+                                <td th:text="${category.getStatus() == 1 ? 'on' : 'off'}">Mark</td>
+                                <td>
+                                    <a th:href="@{/admin/category/update/{id}(id=${category.getCategoryId()})}" class="text-decoration-none pr-3"><button class="btn btn-primary">Edit</button></a>
+<!--                                    <a th:href="@{/admin/category/delete/{id}(id=${category.getCategoryId()})}" class="text-decoration-none"><button class="btn btn-danger">Delete</button></a>-->
+                                </td>
+                            </tr>
+                        </th:block>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <aside class="control-sidebar control-sidebar-dark">
+        <div class="p-3">
+            <h5>Title</h5>
+            <p>Sidebar content</p>
+        </div>
+    </aside>
+    <footer th:replace="admin/fragmientAdmin/footer"></footer>
+</div>
+<div th:replace="admin/fragmientAdmin/addjs"></div>
+</body>
+</html>

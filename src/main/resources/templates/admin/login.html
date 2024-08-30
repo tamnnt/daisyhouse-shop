@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: formField(title = 'Admin')"></head>
+</head>
+<body class="animsition">
+
+<div class="login-page bg-light">
+    <div class="container d-flex justify-content-center">
+        <div class="row w-50">
+            <div class="col-lg-10 offset-lg-1">
+                <div class="bg-white shadow rounded">
+                    <div class="row">
+                        <div class="row">
+                            <div class="h-100 py-5 px-5">
+                                <label class="text-center"  th:if="${error}"><span class="text-danger">Wrong User or Password</span></label>
+                                <form th:action="@{/admin/login}" class="row g-4" method="post">
+                                    <div class="col-12">
+                                        <label>Username<span class="text-danger">*</span></label>
+                                        <div class="input-group">
+                                            <div class="input-group-text"><i class="bi bi-person-fill"></i></div>
+                                            <input type="text" class="form-control" name="username" placeholder="Enter Username">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <label>Password<span class="text-danger">*</span></label>
+                                        <div class="input-group">
+                                            <div class="input-group-text"><i class="bi bi-lock-fill"></i></div>
+                                            <input type="password" id="password" class="form-control" name="password" placeholder="Enter Password">
+                                            <button type="button" id="btnToggle" class="toggle"><i id="eyeIcon" class="bi bi-eye"></i></button>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="remember-me" id="inlineFormCheck">
+                                            <label class="form-check-label" for="inlineFormCheck">Remember me</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="row p-3">
+                                        <div class="col-6 d-grid gap-2 m-auto">
+                                            <button name="submit" type="submit" value="submit" class="btn btn-primary">login</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="fragments/addjs"></div>
+<script>
+    let passwordInput = document.getElementById('password'),
+        toggle = document.getElementById('btnToggle'),
+        icon =  document.getElementById('eyeIcon');
+
+    function togglePassword() {
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            icon.classList.add("bi-eye-slash");
+            icon.classList.remove("bi-eye");
+            //toggle.innerHTML = 'hide';
+        } else {
+            passwordInput.type = 'password';
+            icon.classList.remove("bi-eye-slash");
+            icon.classList.add("bi-eye");
+            //toggle.innerHTML = 'show';
+        }
+    }
+
+    function checkInput() {
+        //if (passwordInput.value === '') {
+        //toggle.style.display = 'none';
+        //toggle.innerHTML = 'show';
+        //  passwordInput.type = 'password';
+        //} else {
+        //  toggle.style.display = 'block';
+        //}
+    }
+
+    toggle.addEventListener('click', togglePassword, false);
+    // passwordInput.addEventListener('keyup', checkInput, false);
+</script>
+
+<!-- Bootstrap JS -->
+
+</body>
+</html>

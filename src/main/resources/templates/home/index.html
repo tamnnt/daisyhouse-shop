@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: formField(title = 'Home')">
+</head>
+<style>
+	body{
+		background-color: #f1f6ff;
+	}
+	#news-slider{
+		margin-top: 80px;
+	}
+	.post-slide{
+		background: #fff;
+		margin: 20px 15px 20px;
+		border-radius: 15px;
+		padding-top: 1px;
+		box-shadow: 0px 14px 22px -9px #bbcbd8;
+	}
+	.post-slide .post-img{
+		position: relative;
+		overflow: hidden;
+		border-radius: 10px;
+		margin: -12px 15px 8px 15px;
+		margin-left: -10px;
+	}
+	.post-slide .post-img img{
+		width: 100%;
+		height: auto;
+		transform: scale(1,1);
+		transition:transform 0.2s linear;
+	}
+	.post-slide:hover .post-img img{
+		transform: scale(1.1,1.1);
+	}
+	.post-slide .over-layer{
+		width:100%;
+		height:100%;
+		position: absolute;
+		top:0;
+		left:0;
+		opacity:0;
+		background: linear-gradient(-45deg, rgba(6,190,244,0.75) 0%, rgba(45,112,253,0.6) 100%);
+		transition:all 0.50s linear;
+	}
+	.post-slide:hover .over-layer{
+		opacity:1;
+		text-decoration:none;
+	}
+	.post-slide .over-layer i{
+		position: relative;
+		top:45%;
+		text-align:center;
+		display: block;
+		color:#fff;
+		font-size:25px;
+	}
+	.post-slide .post-content{
+		background:#fff;
+		padding: 2px 20px 40px;
+		border-radius: 15px;
+	}
+	.post-slide .post-title a{
+		font-size:15px;
+		font-weight:bold;
+		color:#333;
+		display: inline-block;
+		text-transform:uppercase;
+		transition: all 0.3s ease 0s;
+	}
+	.post-slide .post-title a:hover{
+		text-decoration: none;
+		color:#3498db;
+	}
+	.post-slide .post-description{
+		line-height:24px;
+		color:#808080;
+		margin-bottom:25px;
+	}
+	.post-slide .post-date{
+		color:#a9a9a9;
+		font-size: 14px;
+	}
+	.post-slide .post-date i{
+		font-size:20px;
+		margin-right:8px;
+		color: #CFDACE;
+	}
+	.post-slide .read-more{
+		padding: 7px 20px;
+		float: right;
+		font-size: 12px;
+		background: #2196F3;
+		color: #ffffff;
+		box-shadow: 0px 10px 20px -10px #1376c5;
+		border-radius: 25px;
+		text-transform: uppercase;
+	}
+	.post-slide .read-more:hover{
+		background: #3498db;
+		text-decoration:none;
+		color:#fff;
+	}
+	.owl-controls .owl-buttons{
+		text-align:center;
+		margin-top:20px;
+	}
+	.owl-controls .owl-buttons .owl-prev{
+		background: #fff;
+		position: absolute;
+		top:40%;
+		left:15px;
+		padding: 0 18px 0 15px;
+		border-radius: 50px;
+		box-shadow: 3px 14px 25px -10px #92b4d0;
+		transition: background 0.5s ease 0s;
+	}
+	.owl-controls .owl-buttons .owl-next{
+		background: #fff;
+		position: absolute;
+		top:40%;
+		right: 15px;
+		padding: 0 15px 0 18px;
+		border-radius: 50px;
+		box-shadow: -3px 14px 25px -10px #92b4d0;
+		transition: background 0.5s ease 0s;
+	}
+	.owl-controls .owl-buttons .owl-prev:after,
+	.owl-controls .owl-buttons .owl-next:after{
+		content:"\f104";
+		font-family: FontAwesome;
+		color: #333;
+		font-size:30px;
+	}
+	.owl-controls .owl-buttons .owl-next:after{
+		content:"\f105";
+	}
+	@media only screen and (max-width:1280px) {
+		.post-slide .post-content{
+			padding: 0px 15px 25px 15px;
+		}
+	}
+</style>
+<body class="animsition">
+
+	<header th:if="${customer} != null">
+		<div th:replace="fragments/nav :: formField(imgview = 'null',fullname = ${customer.getFullName()})"></div>
+	</header>
+	<header th:if="${customer} == null">
+		<div th:replace="fragments/nav"></div>
+	</header>
+
+	<!-- Slider -->
+	<section class="section-slide p-b-140 bg0 p-t-80 pb-3">
+		<div class="wrap-slick1">
+			<div class="slick1">
+				<th:block th:each="slide : ${homeSlideList}">
+					<div class="item-slick1" th:style="'background-image:url(' + ${slide.getSlideImg()} +')'">
+						<div class="container h-full">
+							<div class="flex-col-l-m h-full p-t-100 p-b-30 respon5">
+								<div class="layer-slick1 animated visible-false" data-appear="fadeInDown" data-delay="0">
+								<span class="ltext-101 cl2 respon2" th:text="${slide.getSlideSub()}">
+									Women Collection 2018
+								</span>
+								</div>
+
+								<div class="layer-slick1 animated visible-false" data-appear="fadeInUp" data-delay="800">
+									<h2 class="ltext-201 cl2 p-t-19 p-b-43 respon1" th:text="${slide.getSlideTitle()}">
+										NEW SEASON
+									</h2>
+								</div>
+
+								<div class="layer-slick1 animated visible-false" data-appear="zoomIn" data-delay="1600">
+									<a th:href="@{/product}" class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04">
+										Shop Now
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</th:block>
+			</div>
+		</div>
+	</section>
+
+
+	<!-- Banner -->
+	<div class="sec-banner bg0  p-b-50">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div id="news-slider" class="owl-carousel">
+						<th:block th:each="event : ${eventList}">
+							<div class="post-slide">
+								<div class="col-md-6 col-xl-4 p-b-30 m-lr-auto w-100">
+									<!-- Block1 -->
+									<div class="block1 wrap-pic-w">
+										<img th:src="${event.getEventImg()}" alt="img-event">
+
+										<a th:href="@{/event/{id}(id=${event.getEventId()})}"  class="block1-txt ab-t-l s-full flex-col-l-sb p-lr-38 p-tb-34 trans-03 respon3">
+											<div class="block1-txt-child1 flex-col-l">
+								<span class="block1-name ltext-102 trans-04 p-b-8" th:text="${event.getEventName()}">
+										Women
+								</span>
+
+												<span class="block1-info stext-102 trans-04" th:text="${event.getEventTopic()}">
+									Spring 2018
+								</span>
+											</div>
+
+											<div class="block1-txt-child2 p-b-4 trans-05">
+												<div class="block1-link stext-101 cl0 trans-09">
+													Shop Now
+												</div>
+											</div>
+										</a>
+									</div>
+								</div>
+							</div>
+						</th:block>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- Product -->
+	<section class="bg0 p-t-23 p-b-140">
+		<div class="container">
+			<div class="p-b-10">
+				<h3 class="ltext-103 cl5">
+					Product Overview
+				</h3>
+			</div>
+			<div class="row isotope-grid">
+				<th:block th:each="product : ${productList}">
+					<th:block th:if="${product.getStatus() == 1}">
+						<div th:class="'col-sm-6 col-md-4 col-lg-3 p-4 mb-5 isotope-item h-item  ' + ${product.getCategory().getCategoryName()}" style="height: 450px; ">
+							<!-- Block2 -->
+							<div class="block2" style="height: 100%;box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;border-radius: 20px;">
+								<div class="block2-pic hov-img0 d-flex p" style="height: 100%; border-radius: 20px;">
+									<img th:src="${product.getImages()}" alt="IMG-PRODUCT" style="object-fit: cover">
+								</div>
+
+								<div class="block2-txt flex-w flex-t p-t-14 mb-3">
+									<div class="block2-txt-child1 flex-col-l ">
+										<a th:href="@{/product/{id}(id=${product.getProductId()})}" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6" th:text="${product.getProductName()}">
+											Esprit Ruffle Shirt
+										</a>
+										<span class="stext-105 cl3" th:text="${#numbers.formatDecimal(product.getPircePreview(),0,'COMMA',0,'POINT')+ ' VNĐ'}">$75.00</span>
+									</div>
+
+									<div class="block2-txt-ch	ild2 flex-r p-t-3">
+										<a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
+											<img class="icon-heart1 dis-block trans-04" src="/images/icons/icon-heart-01.png" alt="ICON">
+											<img class="icon-heart2 dis-block trans-04 ab-t-l" src="/images/icons/icon-heart-02.png" alt="ICON">
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</th:block>
+
+				</th:block>
+			</div>
+
+			<div class="flex-c-m flex-w w-full p-t-45">
+				<a href="/product" class="flex-c-m stext-101 cl5 size-103 bg2 bor1 hov-btn1 p-lr-15 trans-04">
+					View More
+				</a>
+			</div>
+		</div>
+	</section>
+
+
+	<div th:replace="fragments/footer"></div>
+	<div th:replace="fragments/addjs"></div>
+	<script src="/slider/carousel.js"></script>
+	<script>
+		$(document).ready(function() {
+			$("#news-slider").owlCarousel({
+				items : 3,
+				itemsDesktop:[1199,3],
+				itemsDesktopSmall:[980,2],
+				itemsMobile : [600,1],
+				navigation:true,
+				navigationText:["",""],
+				pagination:true,
+				autoPlay:true
+			});
+		});
+	</script>
+</body>
+</html>

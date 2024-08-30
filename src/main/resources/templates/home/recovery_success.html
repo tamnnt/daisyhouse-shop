@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace = "fragments/head :: formField(title = 'Register Success')">
+
+</head>
+<body class="animsition">
+    <header>
+        <div th:replace="fragments/nav"></div>
+    </header>
+    <div class="container bg0 p-t-80 p-b-50">
+        <div class="" style="text-align: center;min-height: 400px;padding: 100px 0;">
+            <h1 style="  font-size: 30px; color: red;">You have request your reset password!</h1>
+            <h1 style="  font-size: 30px; color: red;">Please check your email to your reset password!</h1>
+            <p> Vui lòng quay lại </p>
+            <a th:href="@{/}" style="background: #9b6e6e; padding: 10px; color: white; text-transform: uppercase;display: inline-block;margin-top: 10px;">trang chủ</a>
+        </div>
+    </div>
+
+    <div th:replace="fragments/footer"></div>
+    <div th:replace="fragments/addjs"></div>
+</body>
+</html>

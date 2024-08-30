@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<!--
+This is a starter template page. Use this page to start your new project from
+scratch. This page gets rid of all links and provides the needed markup only.
+-->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/fragmientAdmin/head :: formField(title = 'Admin')"></head>
+<style>
+  fieldset{
+    border: 1px solid #ccc;
+    display: block;
+    padding: 10px 10px;
+    margin-top: 10px;
+  }
+  legend{
+    width: auto;
+    float: none;
+    font-size: 20px;
+    padding: 5px 5px;
+    font-weight: 900;
+  }
+  .img-preview {
+    width: 500px;
+  }
+  .messages{
+    text-align: center;
+    font-size: 20px;
+    font-weight: 1000;
+    background: #25cf98;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    display: flex;
+  }
+  @media only screen and (max-width: 575px) {
+    .img-preview{
+      width: 300px;
+    }
+  }
+</style>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+  <nav th:replace="admin/fragmientAdmin/nav"></nav>
+
+  <aside th:replace="admin/fragmientAdmin/slider-bar"></aside>
+  <div class="content-wrapper">
+    <div class="content" >
+      <div class="container-fluid">
+        <div class="row" th:if="${message}">
+          <p class="messages" th:text="${'Create About Information success and About Information id is: '+blogId }"></p>
+        </div>
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="card">
+              <div class="card-body">
+                <h3>Create Blog</h3>
+                <form th:action="@{/admin/blog/create}" th:object="${blog}" method="post" enctype="multipart/form-data">
+                  <input type="hidden" th:field="*{blogId}">
+                  <div class="row">
+                    <div class="col-12 col-sm-6">
+                      <label  class="form-label">Title</label>
+                      <input type="text" th:field="*{blogTitle}" class="form-control"  required>
+                    </div>
+                    <div class="col-12 col-sm-6">
+                      <label class="form-label">Description</label>
+                      <input type="text" th:field="*{blogDesc}" class="form-control"   required>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-12 col-sm-6">
+                      <label for="thumbnail" class="form-label">Images</label>
+                      <input type="file" class="form-control" id="thumbnail" name="thumbnail" accept="image/png, image/jpeg,image/jpg" >
+                      <img id="blah" src="#" alt="your image" class="img-preview p-2"  />
+                    </div>
+                    <div class="col-12 col-sm-6">
+                      <label  class="form-label">Author</label>
+                      <input type="text" class="form-control" th:field="*{blogAuthor}" required>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg">
+                      <label  class="form-label">Content</label>
+                      <!--<input type="text" class="form-control" th:field="*{blogContent}" required>-->
+                      <textarea class="form-control" style="height: 200px" th:field="*{blogContent}" required></textarea>
+                    </div>
+
+<!--                    <div class="col-12 col-sm-6">-->
+<!--                      <label  class="form-label">Status</label>-->
+<!--                      <select class="form-control" th:field="*{status}">-->
+<!--                        <option value="0">off</option>-->
+<!--                        <option value="1">on</option>-->
+<!--                      </select>-->
+<!--                    </div>-->
+                  </div>
+
+                  <div class="row p-3">
+                    <div class="col-6 d-grid gap-2 m-auto">
+                      <button type="submit" value="Submit" class="btn btn-primary">Create</button>
+                    </div>
+                  </div>
+                </form>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+    <div class="p-3">
+      <h5>Title</h5>
+      <p>Sidebar content</p>
+    </div>
+  </aside>
+  <!-- /.control-sidebar -->
+
+  <!-- Main Footer -->
+  <footer th:replace="admin/fragmientAdmin/footer"></footer>
+</div>
+
+<div th:replace="admin/fragmientAdmin/addjs"></div>
+<script>
+  thumbnail.onchange = evt => {
+    const [file] = thumbnail.files
+    if (file) {
+      blah.src = URL.createObjectURL(file)
+    }
+  }
+
+</script>
+
+</body>
+</html>
